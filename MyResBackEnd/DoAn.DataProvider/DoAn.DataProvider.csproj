@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DoAn.Common\DoAn.Common.csproj" />
+    <ProjectReference Include="..\DoAn.Domain\DoAn.Domain.csproj" />
+    <ProjectReference Include="..\DoAn.Auth\DoAn.Auth.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="MySql.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Infrastructure\" />
+    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="Configurations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.17">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <!-- <PrivateAssets>all</PrivateAssets> -->
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.17" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+</Project>

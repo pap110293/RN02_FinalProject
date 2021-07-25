@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Interfaces\" />
+    <None Remove="Interfaces\Mapping\" />
+    <None Remove="AutoMapper" />
+    <None Remove="Infrastructure\" />
+    <None Remove="Infrastructure\AutoMapper\" />
+    <None Remove="MediatR" />
+    <None Remove="FluentValidation" />
+    <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Bussiness\" />
+    <None Remove="Bussiness\Auth\" />
+    <None Remove="Bussiness\Auth\Comnands\" />
+    <None Remove="Bussiness\Auth\Querys\" />
+    <None Remove="Bussiness\Auth\Models\" />
+    <None Remove="Bussiness\Auth\Comnands\Login\" />
+    <None Remove="Bussiness\Auth\Comnands\Register\" />
+    <None Remove="Bussiness\Tenant\" />
+    <None Remove="Bussiness\Tenant\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\Mapping\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\AutoMapper\" />
+    <Folder Include="Bussiness\" />
+    <Folder Include="Bussiness\Auth\" />
+    <Folder Include="Bussiness\Auth\Comnands\" />
+    <Folder Include="Bussiness\Auth\Models\" />
+    <Folder Include="Bussiness\Auth\Comnands\Login\" />
+    <Folder Include="Bussiness\Auth\Comnands\Register\" />
+    <Folder Include="Bussiness\Tenant\" />
+    <Folder Include="Bussiness\Tenant\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="FluentValidation" Version="10.3.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DoAn.Auth\DoAn.Auth.csproj" />
+    <ProjectReference Include="..\DoAn.DataProvider\DoAn.DataProvider.csproj" />
+    <ProjectReference Include="..\DoAn.Domain\DoAn.Domain.csproj" />
+  </ItemGroup>
+</Project>
