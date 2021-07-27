@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentValidation;
 
-namespace DoAn.Bussiness.Bussiness.Tenant.Commands
+namespace DoAn.Bussiness.Bussiness.Tenant.Commands.CreateTenant
 {
     public class CreateTenantCommandValidator : AbstractValidator<CreateTenantCommand>
     {

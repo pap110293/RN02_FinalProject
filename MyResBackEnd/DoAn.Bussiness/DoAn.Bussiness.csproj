@@ -29,14 +29,8 @@
     <Folder Include="Interfaces\Mapping\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\AutoMapper\" />
-    <Folder Include="Bussiness\" />
-    <Folder Include="Bussiness\Auth\" />
-    <Folder Include="Bussiness\Auth\Comnands\" />
     <Folder Include="Bussiness\Auth\Models\" />
     <Folder Include="Bussiness\Auth\Comnands\Login\" />
-    <Folder Include="Bussiness\Auth\Comnands\Register\" />
-    <Folder Include="Bussiness\Tenant\" />
-    <Folder Include="Bussiness\Tenant\Commands\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />

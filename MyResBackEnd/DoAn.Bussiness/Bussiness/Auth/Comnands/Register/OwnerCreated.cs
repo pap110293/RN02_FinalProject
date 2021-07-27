@@ -1,7 +1,7 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using DoAn.Bussiness.Bussiness.Tenant.Commands;
+﻿using DoAn.Bussiness.Bussiness.Tenant.Commands.CreateTenant;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DoAn.Bussiness.Bussiness.Auth.Comnands.Register
 {
