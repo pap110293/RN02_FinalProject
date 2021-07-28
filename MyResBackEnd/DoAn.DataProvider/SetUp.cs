@@ -11,7 +11,7 @@ namespace DoAn.DataProvider
             services.AddDbContext<DataContext>(x =>
             {
                 x.UseLazyLoadingProxies();
-                x.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+                x.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("DoAn.API"));
             });
 
             return services;

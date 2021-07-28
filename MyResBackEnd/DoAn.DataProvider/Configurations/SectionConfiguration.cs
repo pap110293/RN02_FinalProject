@@ -10,7 +10,10 @@ namespace DoAn.DataProvider.Configurations
         {
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedOnAdd();
-            builder.HasOne(s => s.Tenant).WithMany(t => t.Sections).HasForeignKey(s => s.TenantId);
+            builder.HasOne(s => s.Tenant)
+                .WithMany(t => t.Sections)
+                .HasForeignKey(s => s.TenantId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

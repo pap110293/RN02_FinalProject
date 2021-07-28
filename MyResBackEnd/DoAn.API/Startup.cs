@@ -48,7 +48,7 @@ namespace DoAn.API
 
             services.AddAuth(Configuration);
             services.AddDataContext(Configuration);
-            services.AddBussiness();
+            services.AddBussiness(Configuration);
             services.AddControllers();
             services.AddCors();
 

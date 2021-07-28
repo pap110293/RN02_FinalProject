@@ -10,7 +10,9 @@ namespace DoAn.DataProvider.Configurations
         {
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).ValueGeneratedOnAdd();
-            builder.HasOne(t => t.Owner).WithOne(u => u.Tenant).HasForeignKey<Tenant>(t => t.OwnerId);
+            builder.HasOne(t => t.Owner)
+                .WithOne(u => u.Tenant)
+                .HasForeignKey<Tenant>(t => t.OwnerId);
         }
     }
 }

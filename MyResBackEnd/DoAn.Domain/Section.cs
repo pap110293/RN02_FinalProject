@@ -7,6 +7,6 @@ namespace DoAn.Domain
         public string Name { get; set; }
         public int TenantId { get; set; }
         public virtual Tenant Tenant { get; set; }
-        public virtual ICollection<Table> Tables { get; set; }
+        public virtual ICollection<Table> Tables { get; set; } = new List<Table>();
     }
 }

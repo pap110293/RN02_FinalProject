@@ -47,7 +47,7 @@ namespace DoAn.DataProvider.Infrastructure
 
             var optionsBuilder = new DbContextOptionsBuilder<TContext>();
 
-            optionsBuilder.UseSqlite(connectionString);
+            optionsBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("DoAn.API"));
 
             return CreateNewInstance(optionsBuilder.Options);
         }

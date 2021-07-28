@@ -27,13 +27,12 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Interfaces\Mapping\" />
-    <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\AutoMapper\" />
     <Folder Include="Bussiness\Auth\Models\" />
-    <Folder Include="Bussiness\Auth\Comnands\Login\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="FluentValidation" Version="10.3.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
