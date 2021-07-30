@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DoAn.DataProvider.Configurations
 {
-    public class PriceConfiguration : IEntityTypeConfiguration<Price>
+    public class PriceConfiguration : IEntityTypeConfiguration<ItemPrice>
     {
-        public void Configure(EntityTypeBuilder<Price> builder)
+        public void Configure(EntityTypeBuilder<ItemPrice> builder)
         {
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Id)
@@ -15,6 +15,9 @@ namespace DoAn.DataProvider.Configurations
                 .WithMany(i => i.Prices)
                 .HasForeignKey(i => i.MenuItemId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(i => i.Name).IsRequired();
+            builder.Property(i => i.MenuItemId).IsRequired();
         }
     }
 }

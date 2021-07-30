@@ -6,6 +6,7 @@ namespace DoAn.Domain
     {
         public int OwnerId { get; set; }
         public virtual User Owner { get; set; }
+        public virtual ICollection<User> Staffs { get; set; }
         public virtual ICollection<Section> Sections { get; set; } = new List<Section>();
         public virtual ICollection<MenuCategory> MenuCategories { get; set; } = new List<MenuCategory>();
     }

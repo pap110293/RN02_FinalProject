@@ -1,7 +1,18 @@
 ﻿using System;
 namespace DoAn.Domain
 {
-    public abstract class AuditableEntity
+    public interface IAuditableEntity
+    {
+        int CreatedBy { get; set; }
+
+        DateTime CreatedOn { get; set; }
+
+        int LastModifiedBy { get; set; }
+
+        DateTime? LastModified { get; set; }
+    }
+
+    public abstract class AuditableEntity<TKey> : EntityBase<TKey>, IAuditableEntity
     {
         public int CreatedBy { get; set; }
 

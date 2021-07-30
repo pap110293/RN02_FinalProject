@@ -6,8 +6,8 @@ namespace DoAn.Domain
     {
         public string Name { get; set; }
         public string Icon { get; set; }
-        public string Color { get; set; }
-        public string BackgroundColor { get; set; }
+        public string Color { get; set; } = "#000000";
+        public string BackgroundColor { get; set; } = "#FFFFFF";
         public int TenantId { get; set; }
         public virtual Tenant Tenant { get; set; }
         public int ParentId { get; set; }

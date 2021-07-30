@@ -16,6 +16,9 @@ namespace DoAn.DataProvider.Configurations
                 .HasForeignKey(i => i.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(i => i.Photo).WithMany().HasForeignKey(i => i.PhotoId);
+
+            builder.Property(i => i.Name).IsRequired();
+            builder.Property(i => i.CategoryId).IsRequired();
         }
     }
 }

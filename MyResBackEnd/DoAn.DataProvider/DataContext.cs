@@ -59,7 +59,7 @@ namespace DoAn.DataProvider
 
         private void UpdateAuditChanges()
         {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach (var entry in ChangeTracker.Entries<IAuditableEntity>())
             {
                 switch (entry.State)
                 {

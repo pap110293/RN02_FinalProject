@@ -11,8 +11,16 @@ namespace DoAn.DataProvider.Configurations
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).ValueGeneratedOnAdd();
             builder.HasOne(t => t.Owner)
-                .WithOne(u => u.Tenant)
-                .HasForeignKey<Tenant>(t => t.OwnerId);
+                .WithOne(u => u.OwnTenant)
+                .HasForeignKey<Tenant>(t => t.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(i => i.Staffs)
+                .WithOne(i => i.StaffTenant)
+                .HasForeignKey(i => i.TenantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(i => i.OwnerId).IsRequired();
         }
     }
 }

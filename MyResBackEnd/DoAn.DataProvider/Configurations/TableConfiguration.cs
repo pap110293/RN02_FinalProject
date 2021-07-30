@@ -17,6 +17,9 @@ namespace DoAn.DataProvider.Configurations
                 .WithMany(s => s.Tables)
                 .HasForeignKey(t => t.SectionId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(t => t.SectionId).IsRequired();
+            builder.Property(t => t.Name).IsRequired();
         }
     }
 }

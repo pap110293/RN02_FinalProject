@@ -10,8 +10,9 @@ namespace DoAn.Domain
         public int CategoryId { get; set; }
         public virtual MenuCategory Category { get; set; }
         public long? PhotoId { get; set; }
-        public virtual Photo Photo {get;set;}
-        public virtual ICollection<Price> Prices { get; set; } = new List<Price>(); 
-
+        public virtual Photo Photo { get; set; }
+        public virtual ICollection<ItemPrice> Prices { get; set; } = new List<ItemPrice>();
+        public virtual ICollection<MenuItemCookingPoint> MenuItemCookingPoints { get; set; } = new List<MenuItemCookingPoint>();
+        public virtual ICollection<MenuItemAddition> MenuItemAdditions { get; set; } = new List<MenuItemAddition>();
     }
 }
