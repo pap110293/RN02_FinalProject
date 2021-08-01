@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAn.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210728105600_Initiation")]
-    partial class Initiation
+    [Migration("20210801034504_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

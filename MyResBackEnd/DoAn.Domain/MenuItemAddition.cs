@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DoAn.Domain
+﻿namespace DoAn.Domain
 {
     public class MenuItemAddition
     {

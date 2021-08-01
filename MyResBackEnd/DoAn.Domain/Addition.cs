@@ -8,6 +8,6 @@ namespace DoAn.Domain
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public ICollection<MenuItemAddition> MenuItemAdditions { get; set; } = new List<MenuItemAddition>();
+        public virtual ICollection<MenuItemAddition> MenuItemAdditions { get; set; } = new List<MenuItemAddition>();
     }
 }
