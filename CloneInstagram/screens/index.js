@@ -1,5 +1,6 @@
-import Login from './auth/login';
-import Register from './auth/register';
+import Login from './auth/Login';
+import Register from './auth/Register';
+import Landing from './Landing';
 
 const screens = {
   login: {
@@ -9,6 +10,10 @@ const screens = {
   register: {
     name: 'register',
     screen: Register,
+  },
+  landding: {
+    name: 'landing',
+    screen: Landing,
   },
 };
 
