@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 
-import screens from '../screens';
-
-const Stack = createStackNavigator();
+import AuthNavigation from './authNavigation';
+import MainNavigation from './mainNavigation';
 
 const RootNavigation = () => {
   const [initializing, setInitializing] = useState(true);
@@ -23,32 +21,22 @@ const RootNavigation = () => {
 
   if (initializing) return null; // add loading sceen here
 
-  let navigator = user => {
+  let Navigator = () => {
     if (user) {
       return (
-        <Stack.Navigator headerMode="none">
-          <Stack.Screen
-            name={screens.landding.name}
-            component={screens.landding.screen}
-          />
-        </Stack.Navigator>
+        <NavigationContainer>
+          <MainNavigation />
+        </NavigationContainer>
       );
     }
     return (
-      <Stack.Navigator headerMode="none">
-        <Stack.Screen
-          name={screens.login.name}
-          component={screens.login.screen}
-        />
-        <Stack.Screen
-          name={screens.register.name}
-          component={screens.register.screen}
-        />
-      </Stack.Navigator>
+      <NavigationContainer>
+        <AuthNavigation />
+      </NavigationContainer>
     );
   };
 
-  return <NavigationContainer>{navigator(user)}</NavigationContainer>;
+  return <Navigator />;
 };
 
 export default RootNavigation;

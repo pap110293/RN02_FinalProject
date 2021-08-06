@@ -1,11 +1,13 @@
 import {Formik} from 'formik';
 import React from 'react';
-import {View, Text, SafeAreaView, TextInput, Button} from 'react-native';
+import {View, Text, SafeAreaView, TextInput, Button, Alert} from 'react-native';
 import * as Yup from 'yup';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import commonStyle from '../../styles/commonStyles';
 import screens from '..';
+import firestoreCollections from '../../firebase/firestoreCollections';
 
 const registerSchema = Yup.object().shape({
   email: Yup.string().email().required('Email is required'),
@@ -16,14 +18,25 @@ const registerSchema = Yup.object().shape({
   name: Yup.string(),
 });
 
-export default function Register({navigation}) {
-  const handleSubmitFormik = async values => {
+export default function RegisterScreen() {
+  const handleSubmitFormik = values => {
     auth()
       .createUserWithEmailAndPassword(values.email, values.password)
-      .then(_ => {
-        navigation.navigate(screens.login.name);
+      .then(async result => {
+        await firestore()
+          .collection(firestoreCollections.user)
+          .doc(result.user.uid)
+          .set({email: values.email, name: values.name});
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          Alert.alert('Alert', 'That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          Alert.alert('Alert', 'That email address is invalid!');
+        }
+      });
   };
 
   return (
@@ -58,7 +71,6 @@ export default function Register({navigation}) {
             <View>
               <Text>Name</Text>
               <TextInput
-                placeholder="******"
                 onChangeText={handleChange('name')}
                 value={values.name}
               />

@@ -15,7 +15,7 @@ const loginSchema = Yup.object().shape({
     .required('Password is required'),
 });
 
-export default function Login({navigation}) {
+export default function LoginScreen({navigation}) {
   const handleSubmitFormik = values => {
     auth()
       .signInWithEmailAndPassword(values.email, values.password)
@@ -54,7 +54,7 @@ export default function Login({navigation}) {
             <View>
               <Button onPress={handleSubmit} title="login"></Button>
               <Button
-                onPress={() => navigation.push(screens.register.name)}
+                onPress={() => navigation.push(screens.register)}
                 title="register"></Button>
             </View>
           </>
