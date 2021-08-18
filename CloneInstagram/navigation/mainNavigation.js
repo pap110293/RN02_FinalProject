@@ -1,5 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import FeedScreen from '../screens/main/feed';
@@ -8,17 +9,19 @@ import AddScreen from '../screens/main/add';
 import ProfileScreen from '../screens/main/profile';
 import ActivityScreen from '../screens/main/activity';
 import screens from '../screens';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import EmptyScreen from '../screens/Empty';
 
-const MainNavigation = ({navigation}) => {
+const MainNavigation = () => {
   const Tab = createBottomTabNavigator();
-  const Stack = createNativeStackNavigator();
+  const Stack = createStackNavigator();
   const tabIconSize = 23;
 
   const MainTabNavigation = () => {
     return (
-      <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Navigator
+        screenOptions={{headerShown: false, tabBarShowLabel: false}}
+        initialRouteName={screens.mains.feed}>
         <Tab.Screen
           name={screens.mains.feed}
           component={FeedScreen}
@@ -26,7 +29,6 @@ const MainNavigation = ({navigation}) => {
             tabBarIcon: ({color, size}) => {
               return <Icon name="home" color={color} size={tabIconSize} />;
             },
-            tabBarShowLabel: false,
           }}
         />
 
@@ -37,7 +39,6 @@ const MainNavigation = ({navigation}) => {
             tabBarIcon: ({color, size}) => {
               return <Icon name="search1" color={color} size={tabIconSize} />;
             },
-            tabBarShowLabel: false,
           }}
         />
 
@@ -50,12 +51,14 @@ const MainNavigation = ({navigation}) => {
                 <Icon name="pluscircleo" color={color} size={tabIconSize} />
               );
             },
-            tabBarShowLabel: false,
           }}
-          listeners={{
-            tabPress: e => {
-              e.preventDefault();
-            },
+          listeners={({navigation}) => {
+            return {
+              tabPress: e => {
+                e.preventDefault();
+                navigation.push(screens.mains.add);
+              },
+            };
           }}
         />
 
@@ -66,7 +69,6 @@ const MainNavigation = ({navigation}) => {
             tabBarIcon: ({color, size}) => {
               return <Icon name="heart" color={color} size={tabIconSize} />;
             },
-            tabBarShowLabel: false,
           }}
         />
 
@@ -77,7 +79,6 @@ const MainNavigation = ({navigation}) => {
             tabBarIcon: ({color, size}) => {
               return <Icon name="user" color={color} size={tabIconSize} />;
             },
-            tabBarShowLabel: false,
           }}
         />
       </Tab.Navigator>
@@ -85,10 +86,16 @@ const MainNavigation = ({navigation}) => {
   };
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen name={screens.mains.main} component={MainTabNavigation} />
-      <Stack.Screen name={screens.mains.add} component={AddScreen} />
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name={screens.mains.main}
+          component={MainTabNavigation}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name={screens.mains.add} component={AddScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

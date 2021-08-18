@@ -1,15 +1,15 @@
 const screens = {
-  login: 'login',
-  register: 'register',
-  landding: 'landing',
+  login: 'Login',
+  register: 'Register',
+  landding: 'Landing',
   mains: {
-    main: 'main',
-    feed: 'feed',
-    search: 'search',
-    addContainer: 'addContainer',
-    add: 'add',
-    activity: 'activity',
-    profile: 'profile',
+    main: 'Main',
+    feed: 'Feeds',
+    search: 'Search',
+    addContainer: 'AddContainer',
+    add: 'Add',
+    activity: 'Activity',
+    profile: 'Profile',
   },
 };
 
