@@ -1,15 +1,38 @@
-import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {SafeAreaView, StyleSheet, FlatList, View, Image} from 'react-native';
 import commonStyle from '../../styles/commonStyles';
-import Icon from 'react-native-vector-icons/AntDesign';
+import {connect, useSelector} from 'react-redux';
+import {currentUserFollowingPostsSelector} from '../../redux/selectors/userSelector';
+import {bindActionCreators} from 'redux';
+import {fetchUserFollowingPosts} from '../../redux/actions/user';
+import Post from '../../components/post';
 
-const FeedScreen = () => {
-  const icon = <Icon name="home" />;
+const FeedScreen = ({fetchUserFollowingPosts, navigation}) => {
+  const posts = useSelector(currentUserFollowingPostsSelector);
+
+  useEffect(() => {
+    fetchUserFollowingPosts();
+  }, []);
+
+  const renderFlatListItem = ({item}) => {
+    return <Post postData={item} navigation={navigation} />;
+  };
+
   return (
-    <SafeAreaView style={commonStyle.screen}>
-      <Text>Hello this is feed screen {icon}</Text>
+    <SafeAreaView style={commonStyle.flex1}>
+      <View>
+        <FlatList data={posts} renderItem={renderFlatListItem} />
+      </View>
     </SafeAreaView>
   );
 };
 
-export default FeedScreen;
+const styles = StyleSheet.create({
+  postContainer: {flex: 1},
+  captionContainer: {flex: 1},
+});
+
+const mapDispatchToProp = dispatch =>
+  bindActionCreators({fetchUserFollowingPosts}, dispatch);
+
+export default connect(null, mapDispatchToProp)(FeedScreen);

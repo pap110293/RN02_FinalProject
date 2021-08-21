@@ -45,6 +45,19 @@ const MainNavigation = ({fetchUser, fetchUserPosts}) => {
     );
   };
 
+  const feedStacks = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name={screens.mains.feed} component={FeedScreen} />
+        <Stack.Screen
+          name={screens.mains.profileUser}
+          component={ProfileScreen}
+          initialParams={{uid: getCurrentUserId()}}
+        />
+      </Stack.Navigator>
+    );
+  };
+
   const profileStacks = () => {
     return (
       <Stack.Navigator>
@@ -80,7 +93,7 @@ const MainNavigation = ({fetchUser, fetchUserPosts}) => {
         initialRouteName={screens.mains.feed}>
         <Tab.Screen
           name={screens.mains.feed}
-          component={FeedScreen}
+          component={feedStacks}
           options={{
             tabBarIcon: ({color}) => {
               return <Icon name="home" color={color} size={tabIconSize} />;

@@ -3,7 +3,7 @@ import {View, StyleSheet, FlatList, Image} from 'react-native';
 
 export default function ImageList({data}) {
   return (
-    <View style={styles.photosContainer}>
+    <View>
       <FlatList
         numColumns={3}
         data={data}
