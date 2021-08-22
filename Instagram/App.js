@@ -62,15 +62,17 @@
 // export default App;
 
 import React from 'react';
-import {KeyboardAvoidingView} from 'react-native';
 import {Provider} from 'react-redux';
 import RootNavigation from './navigation/rootNavigation';
 import store from './redux/store';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function App() {
   return (
     <Provider store={store}>
-      <RootNavigation />
+      <SafeAreaProvider>
+        <RootNavigation />
+      </SafeAreaProvider>
     </Provider>
   );
 }

@@ -17,20 +17,22 @@ import {
   currentUserPostsSelector,
   currentUserSelector,
 } from '../../redux/selectors/userSelector';
+import screens from '..';
 
 const ProfileScreen = ({navigation, route}) => {
   const uid = route.params?.uid;
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
-  const currentUserPost = useSelector(currentUserPostsSelector);
+  const currentUserPosts = useSelector(currentUserPostsSelector);
   const currentUser = useSelector(currentUserSelector);
 
-  useEffect(() => {
+  const fetchData = () => {
     if (uid) {
       if (isCurrentUser(uid)) {
         setUser(currentUser);
-        setPosts(currentUserPost);
+        setPosts(currentUserPosts);
+        navigation.setOptions({headerTitle: currentUser.name});
       } else {
         getUser(uid).then(snapshot => {
           const data = snapshot.data();
@@ -50,7 +52,11 @@ const ProfileScreen = ({navigation, route}) => {
         });
       }
     }
-  }, [uid, currentUser, currentUserPost]);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [uid, currentUser, currentUserPosts]);
 
   const followHandler = () => {
     addUserFollowing(uid)
@@ -76,34 +82,35 @@ const ProfileScreen = ({navigation, route}) => {
     return <EmptyScreen />;
   }
 
+  const goToProfilePosts = (uid, index) => {
+    navigation.push(screens.mains.profilePosts, {userId: uid, index});
+  };
+
   return (
     <SafeAreaView style={commonStyle.flex1}>
-      <View style={styles.container}>
-        <View style={styles.infoContainer}>
-          <Text>{user?.name}</Text>
-          <Text>{user?.email}</Text>
-          {!isCurrentUser(uid) && (
-            <View>
-              {isFollowing ? (
-                <Button title="Unfollow" onPress={unfollowHandler} />
-              ) : (
-                <Button title="Follow" onPress={followHandler} />
-              )}
-            </View>
-          )}
+      <View style={styles.infoContainer}>
+        <Text>{user?.name}</Text>
+        <Text>{user?.email}</Text>
+        {!isCurrentUser(uid) && (
+          <View>
+            {isFollowing ? (
+              <Button title="Unfollow" onPress={unfollowHandler} />
+            ) : (
+              <Button title="Follow" onPress={followHandler} />
+            )}
+          </View>
+        )}
 
-          {isCurrentUser(uid) && (
-            <Button title="Sign Out" onPress={() => signOut()} />
-          )}
-        </View>
-        <ImageList data={posts} />
+        {isCurrentUser(uid) && (
+          <Button title="Sign Out" onPress={() => signOut()} />
+        )}
       </View>
+      <ImageList data={posts} goToProfilePosts={goToProfilePosts} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
   infoContainer: {},
   photosContainer: {},
 });

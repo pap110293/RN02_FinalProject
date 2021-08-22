@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import {
   View,
   Text,
@@ -8,22 +9,28 @@ import {
 } from 'react-native';
 
 import {
+  getComments,
+  getLikes,
   getUser,
-  isLikeThePost,
   likeAPost,
   unlikeAPost,
 } from '../firebase/firestoreService';
 import Avata from '../components/avata';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import screens from '../screens';
+import {getCurrentUserId} from '../firebase/authService';
 
 export default function Post({postData, navigation}) {
   const [user, setUser] = useState({});
-  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [post, setPost] = useState(postData);
+  const currentUserId = getCurrentUserId();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (postData.userId) {
-      getUser(postData.userId).then(doc => {
+    if (post.userId) {
+      getUser(post.userId).then(doc => {
         if (doc.exists) {
           const id = doc.id;
           const userData = doc.data();
@@ -31,22 +38,39 @@ export default function Post({postData, navigation}) {
         }
       });
 
-      isLikeThePost(postData.userId, postData.id).then(liked => {
-        setLiked(liked);
+      getLikes(post.id, post.userId).then(docs => {
+        const data = docs.docs.map(doc => doc.id);
+        setLikes(data);
+      });
+
+      getComments(post.id, post.userId).then(docs => {
+        const commentDatas = docs.docs.map(doc => {
+          if (doc.exists) {
+            return {...doc.data(), id: doc.id};
+          }
+        });
+        setComments(commentDatas);
       });
     }
-  }, [liked]);
+  }, [isFocused]);
 
-  const gotoProfile = () => {
-    navigation.push(screens.mains.profileUser, {uid: user.id});
+  const isLiked = () => likes.indexOf(currentUserId) > -1;
+
+  const goToProfile = () => {
+    navigation.push(screens.mains.profileUser, {uid: post.userId});
+  };
+
+  const goToComments = () => {
+    navigation.push(screens.mains.comments, {
+      post: post,
+      user,
+    });
   };
 
   const likeThePost = () => {
-    console.log(postData.id);
-    console.log(user.id);
-    likeAPost(postData.id, user.id)
+    likeAPost(post.id, user.id)
       .then(() => {
-        setLiked(true);
+        setLikes(l => [...l, currentUserId]);
       })
       .catch(error => {
         console.warn(error);
@@ -54,17 +78,36 @@ export default function Post({postData, navigation}) {
   };
 
   const unlikeThePost = () => {
-    unlikeAPost(postData.id, user.id)
+    unlikeAPost(post.id, user.id)
       .then(() => {
-        setLiked(false);
+        setLikes(l => l.filter(i => i != currentUserId));
       })
       .catch(error => {
         console.warn(error);
       });
   };
 
+  const toggleLike = () => {
+    if (isLiked()) {
+      unlikeThePost();
+    } else {
+      likeThePost();
+    }
+  };
+
+  let lastTap = null;
+  const handleDoubleTap = () => {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+      toggleLike();
+    } else {
+      lastTap = now;
+    }
+  };
+
   const renderHeartIcon = () => {
-    if (liked) {
+    if (isLiked()) {
       return (
         <TouchableWithoutFeedback onPress={unlikeThePost}>
           <FontAwesomeIcon name="heart" size={20} color="red" />
@@ -80,7 +123,7 @@ export default function Post({postData, navigation}) {
   };
 
   const renderPost = () => {
-    if (postData) {
+    if (post) {
       return (
         <View style={styles.postContainer}>
           <View style={styles.postHeader}>
@@ -89,17 +132,19 @@ export default function Post({postData, navigation}) {
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
-                gotoProfile();
+                goToProfile();
               }}>
               <Text style={{fontWeight: '500'}}>{user.name}</Text>
             </TouchableWithoutFeedback>
           </View>
           <View style={styles.imageContainer}>
-            <Image
-              source={{uri: postData.imageUrl}}
-              style={styles.image}
-              width="100%"
-            />
+            <TouchableWithoutFeedback onPressOut={handleDoubleTap}>
+              <Image
+                source={{uri: post.imageUrl}}
+                style={styles.image}
+                width="100%"
+              />
+            </TouchableWithoutFeedback>
           </View>
           <View style={styles.postFooter}>
             <View style={styles.postActions}>
@@ -108,17 +153,28 @@ export default function Post({postData, navigation}) {
                 name="comment-o"
                 size={20}
                 style={{paddingLeft: 15}}
+                onPress={goToComments}
               />
             </View>
-            <Text style={styles.likeText}>1.234 likes</Text>
-            <Text style={styles.captionText}>
-              <Text style={{fontWeight: '500'}}>{user.name}</Text>{' '}
-              {postData.caption}
-            </Text>
-            <View style={styles.commentSection}>
-              <Text style={{fontSize: 12, color: '#8f8f8f'}}>
-                View all comments
+            {likes.length > 0 && (
+              <Text style={styles.likeText}>{likes.length} likes</Text>
+            )}
+            <View style={styles.captionContainer}>
+              <Text>
+                <Text style={{fontWeight: '500'}} onPress={goToProfile}>
+                  {user.name}
+                </Text>{' '}
+                {post.caption}
               </Text>
+            </View>
+            <View style={styles.commentSection}>
+              {comments.length > 0 && (
+                <Text
+                  style={{fontSize: 12, color: '#8f8f8f'}}
+                  onPress={goToComments}>
+                  View all {comments.length} comments
+                </Text>
+              )}
             </View>
           </View>
         </View>
@@ -143,6 +199,6 @@ const styles = StyleSheet.create({
   postFooter: {paddingHorizontal: 10},
   postActions: {flexDirection: 'row', paddingTop: 10},
   likeText: {paddingTop: 10, fontWeight: '600'},
-  captionText: {paddingTop: 10},
+  captionContainer: {paddingTop: 10, flexDirection: 'row'},
   commentSection: {paddingTop: 5},
 });

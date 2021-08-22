@@ -1,25 +1,35 @@
 import React from 'react';
-import {View, StyleSheet, FlatList, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import screens from '../screens';
 
-export default function ImageList({data}) {
+export default function ImageList({data, goToProfilePosts}) {
   return (
-    <View>
-      <FlatList
-        numColumns={3}
-        data={data}
-        renderItem={({item}) => {
-          return (
-            <View style={styles.imageContainer}>
+    <FlatList
+      numColumns={3}
+      data={data}
+      renderItem={({item, index}) => {
+        return (
+          <View style={styles.imageContainer}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                goToProfilePosts(item.userId, index);
+              }}>
               <Image source={{uri: item.imageUrl}} style={styles.image} />
-            </View>
-          );
-        }}
-      />
-    </View>
+            </TouchableWithoutFeedback>
+          </View>
+        );
+      }}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {flex: 1 / 3, padding: 0.5},
-  image: {aspectRatio: 1 / 1},
+  imageContainer: {flex: 1 / 3, padding: 1},
+  image: {aspectRatio: 1},
 });

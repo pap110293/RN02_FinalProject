@@ -6,6 +6,7 @@ const commonStyle = {
   },
   flex1: {flex: 1},
   allCenter: {justifyContent: 'center', alignItems: 'center'},
+  fullWidth: {width: '100%'},
 };
 
 export default commonStyle;

@@ -12,7 +12,10 @@ const screens = {
     profile: 'Profile',
     profileTab: 'ProfileTab',
     profileUser: 'ProfileUser',
+    outProfileUser: 'OutProfileUser',
     save: 'Save',
+    comments: 'Comments',
+    profilePosts: 'ProfilePosts',
   },
 };
 

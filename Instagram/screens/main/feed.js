@@ -5,7 +5,7 @@ import {connect, useSelector} from 'react-redux';
 import {currentUserFollowingPostsSelector} from '../../redux/selectors/userSelector';
 import {bindActionCreators} from 'redux';
 import {fetchUserFollowingPosts} from '../../redux/actions/user';
-import Post from '../../components/post';
+import PostList from '../../components/postList';
 
 const FeedScreen = ({fetchUserFollowingPosts, navigation}) => {
   const posts = useSelector(currentUserFollowingPostsSelector);
@@ -14,15 +14,17 @@ const FeedScreen = ({fetchUserFollowingPosts, navigation}) => {
     fetchUserFollowingPosts();
   }, []);
 
-  const renderFlatListItem = ({item}) => {
-    return <Post postData={item} navigation={navigation} />;
+  const refreshDataHandler = () => {
+    fetchUserFollowingPosts();
   };
 
   return (
     <SafeAreaView style={commonStyle.flex1}>
-      <View>
-        <FlatList data={posts} renderItem={renderFlatListItem} />
-      </View>
+      <PostList
+        posts={posts}
+        navigation={navigation}
+        onRefresh={refreshDataHandler}
+      />
     </SafeAreaView>
   );
 };

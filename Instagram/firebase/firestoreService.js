@@ -102,17 +102,39 @@ const unlikeAPost = (postId, postOwnerId) => {
     .delete();
 };
 
-const isLikeThePost = async (postOwnerId, postId) => {
-  return (
-    await firestore()
-      .collection(firestoreCollections.posts)
-      .doc(postOwnerId)
-      .collection(firestoreCollections.userPosts)
-      .doc(postId)
-      .collection(firestoreCollections.postLikes)
-      .doc(getCurrentUserId())
-      .get()
-  ).exists;
+const getLikes = (postId, postOwnerId) => {
+  return firestore()
+    .collection(firestoreCollections.posts)
+    .doc(postOwnerId)
+    .collection(firestoreCollections.userPosts)
+    .doc(postId)
+    .collection(firestoreCollections.postLikes)
+    .get();
+};
+
+const addComment = (postId, postOwnerId, comment) => {
+  return firestore()
+    .collection(firestoreCollections.posts)
+    .doc(postOwnerId)
+    .collection(firestoreCollections.userPosts)
+    .doc(postId)
+    .collection(firestoreCollections.comments)
+    .add({
+      comment,
+      creator: getCurrentUserId(),
+      creation: firestore.FieldValue.serverTimestamp(),
+    });
+};
+
+const getComments = (postId, postOwnerId) => {
+  return firestore()
+    .collection(firestoreCollections.posts)
+    .doc(postOwnerId)
+    .collection(firestoreCollections.userPosts)
+    .doc(postId)
+    .collection(firestoreCollections.comments)
+    .orderBy('creation', 'desc')
+    .get();
 };
 
 export {
@@ -127,5 +149,7 @@ export {
   getUserFollowings,
   likeAPost,
   unlikeAPost,
-  isLikeThePost,
+  getLikes,
+  addComment,
+  getComments,
 };

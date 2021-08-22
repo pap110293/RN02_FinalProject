@@ -11,7 +11,7 @@ export default function Avata({size, uri, externalStyle}) {
 
   const renderAvataImage = () => {
     if (uri) {
-      return <Image source={{uri}} styles={styles.avtImage} />;
+      return <Image source={{uri}} styles={[avtStyle]} />;
     }
 
     return <FontAwesomeIcon name="user-o" size={size} />;

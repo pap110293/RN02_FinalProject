@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, TouchableOpacity, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import commonStyle from '../../styles/commonStyles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useCamera} from 'react-native-camera-hooks';
@@ -51,21 +57,23 @@ const AddScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={commonStyle.flex1}>
-      <RNCamera
-        ref={cameraRef}
-        autoFocusPointOfInterest={autoFocusPoint.normalized}
-        type={type}
-        ratio={ratio}
-        style={commonStyle.flex1}
-        autoFocus={autoFocus}>
-        <TouchableOpacity
-          testID="button"
-          onPress={() => {
-            navigation.goBack();
-          }}>
-          <Icon name="keyboard-backspace" size={30} />
-        </TouchableOpacity>
-      </RNCamera>
+      <View style={{flex: 0.9}}>
+        <RNCamera
+          ref={cameraRef}
+          autoFocusPointOfInterest={autoFocusPoint.normalized}
+          type={type}
+          ratio={ratio}
+          style={{flex: Platform.OS === 'ios' ? 1 : 0.95}}
+          autoFocus={autoFocus}>
+          <TouchableOpacity
+            testID="button"
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <Icon name="keyboard-backspace" size={30} color="white" />
+          </TouchableOpacity>
+        </RNCamera>
+      </View>
       <View style={styles.buttonContainer}>
         <View style={styles.leftButtonContainer}>
           <TouchableOpacity testID="button" onPress={selectImage}>
@@ -92,9 +100,9 @@ export default AddScreen;
 const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
-    height: 80,
     paddingLeft: 10,
     paddingRight: 10,
+    flex: 0.1,
   },
 
   centerButtonContainer: {

@@ -11,14 +11,16 @@ import SearchScreen from '../screens/main/search';
 import AddScreen from '../screens/main/add';
 import ProfileScreen from '../screens/main/profile';
 import ActivityScreen from '../screens/main/activity';
+import CommentsScreen from '../screens/main/comments/comments';
 import screens from '../screens';
 import {createStackNavigator} from '@react-navigation/stack';
 import EmptyScreen from '../screens/Empty';
 import SaveScreen from '../screens/main/save';
 import {fetchUser, fetchUserPosts} from '../redux/actions/user';
 import {getCurrentUserId} from '../firebase/authService';
+import ProfilePosts from '../screens/main/profilePosts';
 
-const MainNavigation = ({fetchUser, fetchUserPosts}) => {
+const MainNavigation = ({fetchUser, fetchUserPosts, navigation}) => {
   const Tab = createBottomTabNavigator();
   const Stack = createStackNavigator();
   const tabIconSize = 23;
@@ -48,7 +50,11 @@ const MainNavigation = ({fetchUser, fetchUserPosts}) => {
   const feedStacks = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name={screens.mains.feed} component={FeedScreen} />
+        <Stack.Screen
+          name={screens.mains.feed}
+          component={FeedScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name={screens.mains.profileUser}
           component={ProfileScreen}
@@ -165,9 +171,24 @@ const MainNavigation = ({fetchUser, fetchUserPosts}) => {
         <Stack.Screen
           name={screens.mains.add}
           component={AddScreen}
-          options={{headerTitle: 'Post'}}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={screens.mains.comments}
+          component={CommentsScreen}
+          options={{headerBackTitleVisible: false}}
+        />
+        <Stack.Screen
+          name={screens.mains.outProfileUser}
+          component={ProfileScreen}
+          initialParams={{uid: getCurrentUserId()}}
+          options={{headerBackTitleVisible: false}}
         />
         <Stack.Screen name={screens.mains.save} component={SaveScreen} />
+        <Stack.Screen
+          name={screens.mains.profilePosts}
+          component={ProfilePosts}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

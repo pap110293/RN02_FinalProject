@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import {
   View,
   Image,
-  Button,
-  TextInput,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {Input, Button} from 'react-native-elements';
 
 import {getCurrentUserId} from '../../firebase/authService';
 import {saveUserPost} from '../../firebase/firestoreService';
@@ -46,23 +47,35 @@ const SaveScreen = props => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={commonStyle.flex1}>
-      <View style={commonStyle.flex1}>
-        {image && (
-          <Image source={{uri: image}} style={{flex: 1}} resizeMode="contain" />
-        )}
-        <View style={{flex: 0.5}}>
-          <TextInput
-            placeholder="Caption"
-            value={caption}
-            onChangeText={text => {
-              setCaption(text);
-            }}
-          />
-          <Button title="Post" onPress={postHandler} />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}>
+      <KeyboardAvoidingView behavior="height" style={commonStyle.flex1}>
+        <View style={commonStyle.flex1}>
+          {image && (
+            <Image
+              source={{uri: image}}
+              style={{flex: 1}}
+              resizeMode="contain"
+            />
+          )}
+          <View style={{flex: 0.5}}>
+            <Input
+              placeholder="Caption"
+              value={caption}
+              onChangeText={text => {
+                setCaption(text);
+              }}
+              returnKeyLabel="Post"
+              returnKeyType="send"
+              onSubmitEditing={postHandler}
+            />
+            <Button title="Post" onPress={postHandler} />
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 

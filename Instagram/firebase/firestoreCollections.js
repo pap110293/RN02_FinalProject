@@ -5,6 +5,7 @@ const firestoreCollections = {
   following: 'Following',
   userFollowing: 'UserFollowing',
   postLikes: 'PostLikes',
+  comments: 'Comments',
 };
 
 export default firestoreCollections;
