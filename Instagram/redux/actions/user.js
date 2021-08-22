@@ -62,7 +62,12 @@ export const fetchUserFollowingPosts = () => {
           tasks.push(getUserPosts(userId).then(handleUserPostDocs));
         }
         Promise.all(tasks).then(() => {
-          dispatch({type: USER_FOLLOWING_POST_STATE_CHANGE, payload: posts});
+          dispatch({
+            type: USER_FOLLOWING_POST_STATE_CHANGE,
+            payload: posts.sort(
+              (a, b) => a.creation.toDate() - b.creation.toDate(),
+            ),
+          });
         });
       }
     });

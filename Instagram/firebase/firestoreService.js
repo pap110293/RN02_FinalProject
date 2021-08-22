@@ -73,9 +73,13 @@ const getUserFollowing = userId => {
 };
 
 const getUserFollowings = () => {
+  return getUserFollowingsOfUser(getCurrentUserId());
+};
+
+const getUserFollowingsOfUser = uid => {
   return firestore()
     .collection(firestoreCollections.following)
-    .doc(getCurrentUserId())
+    .doc(uid)
     .collection(firestoreCollections.userFollowing)
     .get();
 };
@@ -137,6 +141,13 @@ const getComments = (postId, postOwnerId) => {
     .get();
 };
 
+const updateAvatar = imageUrl => {
+  return firestore()
+    .collection(firestoreCollections.users)
+    .doc(getCurrentUserId())
+    .update({avatar: imageUrl});
+};
+
 export {
   saveUserPost,
   getUser,
@@ -147,9 +158,11 @@ export {
   removeUserFollowing,
   getUserFollowing,
   getUserFollowings,
+  getUserFollowingsOfUser,
   likeAPost,
   unlikeAPost,
   getLikes,
   addComment,
   getComments,
+  updateAvatar,
 };

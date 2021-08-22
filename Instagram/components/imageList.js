@@ -6,7 +6,6 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import screens from '../screens';
 
 export default function ImageList({data, goToProfilePosts}) {
   return (
@@ -30,6 +29,6 @@ export default function ImageList({data, goToProfilePosts}) {
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {flex: 1 / 3, padding: 1},
+  imageContainer: {flex: 1 / 3, padding: 0.5},
   image: {aspectRatio: 1},
 });

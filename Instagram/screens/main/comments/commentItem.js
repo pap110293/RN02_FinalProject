@@ -23,7 +23,7 @@ export default function CommentItem({comment, navigation, key}) {
   return (
     <View key={key} style={styles.captionContainer}>
       <View style={styles.avataContainer}>
-        <Avata size={30} />
+        <Avata uri={user?.avatar} />
       </View>
       <View style={styles.captionTextContainer}>
         <Text>
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
   },
-  avataContainer: {flex: 0.1},
+  avataContainer: {flex: 0.1, paddingRight: 10},
   captionTextContainer: {flex: 1},
 });

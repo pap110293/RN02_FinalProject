@@ -128,7 +128,7 @@ export default function Post({postData, navigation}) {
         <View style={styles.postContainer}>
           <View style={styles.postHeader}>
             <View style={{paddingRight: 10}}>
-              <Avata size={20} />
+              <Avata uri={user?.avatar} />
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
@@ -167,15 +167,16 @@ export default function Post({postData, navigation}) {
                 {post.caption}
               </Text>
             </View>
-            <View style={styles.commentSection}>
-              {comments.length > 0 && (
-                <Text
-                  style={{fontSize: 12, color: '#8f8f8f'}}
-                  onPress={goToComments}>
+            {comments.length > 0 && (
+              <View style={styles.commentSection}>
+                <Text style={styles.secondaryText} onPress={goToComments}>
                   View all {comments.length} comments
                 </Text>
-              )}
-            </View>
+              </View>
+            )}
+            <Text style={[styles.secondaryText, {paddingTop: 5}]}>
+              {post.creation.toDate().toDateString()}
+            </Text>
           </View>
         </View>
       );
@@ -201,4 +202,5 @@ const styles = StyleSheet.create({
   likeText: {paddingTop: 10, fontWeight: '600'},
   captionContainer: {paddingTop: 10, flexDirection: 'row'},
   commentSection: {paddingTop: 5},
+  secondaryText: {fontSize: 12, color: '#8f8f8f'},
 });

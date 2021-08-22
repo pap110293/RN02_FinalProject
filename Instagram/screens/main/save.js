@@ -12,7 +12,11 @@ import {Input, Button} from 'react-native-elements';
 
 import {getCurrentUserId} from '../../firebase/authService';
 import {saveUserPost} from '../../firebase/firestoreService';
-import {postsPath, uploadImage} from '../../firebase/storageSerivce';
+import {
+  avatarPath,
+  postsPath,
+  uploadImage,
+} from '../../firebase/storageSerivce';
 import {fetchUserPosts} from '../../redux/actions/user';
 import commonStyle from '../../styles/commonStyles';
 
@@ -26,7 +30,7 @@ const SaveScreen = props => {
     const blob = await response.blob();
     const currentUserId = getCurrentUserId();
     const randomString = Math.random().toString(36);
-    const childPath = `${postsPath}/${currentUserId}/${randomString}`;
+    const childPath = `${avatarPath}/${currentUserId}/${randomString}`;
 
     const task = uploadImage(childPath, blob);
 

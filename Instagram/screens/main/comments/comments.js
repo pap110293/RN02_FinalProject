@@ -80,7 +80,7 @@ export default function CommentsScreen({route, navigation}) {
         <View style={{flex: 0.93}}>
           <View style={styles.captionContainer}>
             <View style={styles.avataContainer}>
-              <Avata size={32} />
+              <Avata uri={user?.avatar} />
             </View>
             <View style={styles.captionTextContainer}>
               <Text>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 20,
   },
-  avataContainer: {flex: 0.1},
+  avataContainer: {flex: 0.1, paddingRight: 10},
   captionTextContainer: {flex: 1},
   devide: {
     borderBottomWidth: 1,
